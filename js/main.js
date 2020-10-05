@@ -72,6 +72,6 @@ const searchITunesMusicAPI = (event) => {
 }
 
 //Add Event Listener to Form
-const searchForm = document.querySelector("section:nth-of-type(1) > form");
-searchForm.addEventListener("submit", searchITunesMusicAPI);
-searchForm.addEventListener("input", searchITunesMusicAPI);
+//const searchForm = document.querySelector("section:nth-of-type(1) > form");
+//searchForm.addEventListener("submit", searchITunesMusicAPI);
+//searchForm.addEventListener("input", searchITunesMusicAPI);
