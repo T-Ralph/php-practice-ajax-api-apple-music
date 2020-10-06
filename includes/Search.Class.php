@@ -20,8 +20,7 @@
 
         public function SearchKeywords() {
             //Prepare & Search API
-            $this->keywords = str_ireplace(" ", "+", $this->keywords);
-            $this->json_api = 'https://itunes.apple.com/search?term=' . $this->keywords;
+            $this->json_api = 'https://itunes.apple.com/search?term=' . urlencode($this->keywords);
             $this->json_results = file_get_contents($this->json_api);
             $this->json_data = json_decode($this->json_results);
         }

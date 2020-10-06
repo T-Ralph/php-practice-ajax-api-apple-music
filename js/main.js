@@ -4,7 +4,7 @@ const searchITunesMusicAPI = (event) => {
     const searchTerm = document.querySelector("section:nth-of-type(1) > form > input[type=search]").value; //Search Query
     
     //AJAX Fetch
-    fetch( `../api/?term=${searchTerm.replace(/ /g, "+")}` )
+    fetch( `../api/?term=${encodeURIComponent(searchTerm)}` )
         .then( response => response.json() ) //Convert JSON Response to JSON Object
         .then( data => {
 
@@ -73,5 +73,7 @@ const searchITunesMusicAPI = (event) => {
 
 //Add Event Listener to Form
 const searchForm = document.querySelector("section:nth-of-type(1) > form#search-form");
-searchForm.addEventListener("submit", searchITunesMusicAPI);
-searchForm.addEventListener("input", searchITunesMusicAPI);
+if (searchForm) {
+    searchForm.addEventListener("submit", searchITunesMusicAPI);
+    searchForm.addEventListener("input", searchITunesMusicAPI);
+}
