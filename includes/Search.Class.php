@@ -18,11 +18,19 @@
             }
         }
 
+        public function SearchKeywords() {
+            //Prepare & Search API
+            $this->keywords = str_ireplace(" ", "+", $this->keywords);
+            $this->json_api = 'https://itunes.apple.com/search?term=' . $this->keywords;
+            $this->json_results = file_get_contents($this->json_api);
+            $this->json_data = json_decode($this->json_results);
+        }
+
         public function RenderSearchResults() {
             //Loop Through Search Results
             if ($this->json_data) :
                 foreach ($this->json_data->results as $json_data) :
-                    if ($json_data->kind && $json_data->kind == "song") :
+                    if (!empty($json_data->kind) && $json_data->kind == "song") :
                     ?>
                         <section class="search-results">
                             <h2><?php echo (!empty($json_data->artistName)) ? $json_data->artistName : ""; ?></h2>
@@ -52,7 +60,7 @@
             //Loop Through Search Results
             if ($this->json_data) :
                 foreach ($this->json_data->results as $json_data) :
-                    if ($json_data->kind && $json_data->kind == "song") :
+                    if (!empty($json_data->kind) && $json_data->kind == "song") :
                         $build_array = array();
                         $build_array["kind"] = "song";
                         $build_array["artistName"] = (!empty($json_data->artistName)) ? $json_data->artistName : NULL;
@@ -71,14 +79,6 @@
 
             //Convert Array to JSON and Echo
             echo json_encode($data);
-        }
-
-        public function SearchKeywords() {
-            //Prepare & Search API
-            $this->keywords = str_ireplace(" ", "+", $this->keywords);
-            $this->json_api = 'https://itunes.apple.com/search?term=' . $this->keywords;
-            $this->json_results = file_get_contents($this->json_api);
-            $this->json_data = json_decode($this->json_results);
         }
     }
 ?>
